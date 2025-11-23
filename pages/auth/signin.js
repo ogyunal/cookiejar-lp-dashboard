@@ -1,19 +1,28 @@
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Input from '../../components/shared/Input';
 import Button from '../../components/shared/Button';
+import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import { FaArrowLeft } from 'react-icons/fa';
 
 export default function SignIn() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Redirect to dashboard if already signed in
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/dashboard/overview');
+    }
+  }, [status, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +48,24 @@ export default function SignIn() {
       setLoading(false);
     }
   };
+
+  // Show loading spinner while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="xl" />
+      </div>
+    );
+  }
+
+  // If already authenticated, show nothing (redirecting)
+  if (status === 'authenticated') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="xl" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -111,13 +138,17 @@ export default function SignIn() {
             transition={{ duration: 0.6 }}
           >
             {/* Back to home link */}
-            <Link
-              href="/"
+            <a
+              href={
+                typeof window !== 'undefined' && window.location.hostname === 'localhost'
+                  ? 'http://localhost:3000/'
+                  : 'https://thecookiejar.app/'
+              }
               className="inline-flex items-center gap-2 text-gray-600 hover:text-cookie-brown mb-8 transition-colors"
             >
               <FaArrowLeft />
               <span>Back to Home</span>
-            </Link>
+            </a>
             
             <div className="mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
