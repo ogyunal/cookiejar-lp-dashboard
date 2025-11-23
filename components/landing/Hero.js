@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import Button from '../shared/Button';
 import { FaApple, FaGooglePlay } from 'react-icons/fa';
 
@@ -65,12 +66,12 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              <a
+              <Link
                 href="/auth/signin"
                 className="text-cookie-chocolate hover:text-cookie-brown font-semibold underline transition-colors"
               >
                 I'm a Creator →
-              </a>
+              </Link>
             </motion.div>
           </motion.div>
           
