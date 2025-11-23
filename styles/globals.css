@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-base-100 text-base-content;
+  }
+}
+
+@layer components {
+  .cookie-jar-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFF8E7' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-br from-cookie-brown to-cookie-dark-brown;
+  }
+
+  .gradient-accent {
+    @apply bg-gradient-to-br from-cookie-cream to-cookie-light-cream;
+  }
+
+  .btn-primary-custom {
+    @apply bg-cookie-brown hover:bg-cookie-dark-brown text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary-custom {
+    @apply bg-white hover:bg-cookie-cream text-cookie-chocolate border-2 border-cookie-brown font-semibold py-3 px-6 rounded-lg transition-all duration-200;
+  }
+
+  .card-custom {
+    @apply bg-white rounded-xl shadow-lg p-6 transition-all duration-200 hover:shadow-xl;
+  }
+
+  .input-custom {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-cookie-brown focus:ring-2 focus:ring-cookie-brown/20 outline-none transition-all;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-cookie-brown rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-cookie-dark-brown;
+}
+

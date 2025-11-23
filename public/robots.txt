@@ -1,0 +1,11 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow dashboard (requires authentication)
+Disallow: /dashboard/
+Disallow: /auth/
+
+# Sitemap
+Sitemap: https://thecookiejar.app/sitemap.xml
+
