@@ -66,12 +66,16 @@ export default function Hero() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              <Link
-                href="/auth/signin"
+              <a
+                href={
+                  typeof window !== 'undefined' && window.location.hostname === 'localhost'
+                    ? 'http://localhost:3000/auth/signin'
+                    : 'https://creator.thecookiejar.app/auth/signin'
+                }
                 className="text-cookie-chocolate hover:text-cookie-brown font-semibold underline transition-colors"
               >
-                I'm a Creator →
-              </Link>
+                Creator Dashboard →
+              </a>
             </motion.div>
           </motion.div>
           

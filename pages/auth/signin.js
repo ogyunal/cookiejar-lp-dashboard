@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Input from '../../components/shared/Input';
 import Button from '../../components/shared/Button';
-import EnrollmentModal from '../../components/modals/EnrollmentModal';
 import { FaArrowLeft } from 'react-icons/fa';
 
 export default function SignIn() {
@@ -15,7 +14,6 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [showEnrollment, setShowEnrollment] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,8 +28,9 @@ export default function SignIn() {
       });
 
       if (result?.error) {
-        setError('Invalid email or password. Please try again.');
+        setError(result.error || 'Invalid email or password. Please try again.');
       } else {
+        // Successful sign in - NextAuth will handle redirect based on creator status
         router.push('/dashboard/overview');
       }
     } catch (err) {
@@ -186,12 +185,12 @@ export default function SignIn() {
             <div className="mt-8 text-center">
               <p className="text-gray-600">
                 Don't have an account?{' '}
-                <button
-                  onClick={() => setShowEnrollment(true)}
-                  className="text-cookie-brown hover:text-cookie-dark-brown font-semibold"
-                >
-                  Sign up as a creator
-                </button>
+                <span className="text-gray-900 font-semibold">
+                  Sign up in the CookieJar mobile app
+                </span>
+              </p>
+              <p className="text-sm text-gray-500 mt-2">
+                Download from App Store or Google Play, then sign in here to become a creator
               </p>
             </div>
             
@@ -210,12 +209,6 @@ export default function SignIn() {
           </motion.div>
         </div>
       </div>
-      
-      {/* Enrollment Modal */}
-      <EnrollmentModal
-        isOpen={showEnrollment}
-        onClose={() => setShowEnrollment(false)}
-      />
     </>
   );
 }

@@ -73,7 +73,12 @@ export default function ForCreators() {
             >
               <Button
                 size="lg"
-                onClick={() => window.location.href = '/auth/signin'}
+                onClick={() => {
+                  const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+                  window.location.href = isLocalhost 
+                    ? 'http://localhost:3000/auth/signin'
+                    : 'https://creator.thecookiejar.app/auth/signin';
+                }}
               >
                 Start Creating
               </Button>

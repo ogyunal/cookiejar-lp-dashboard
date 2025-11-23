@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost', 'thecookiejar.app', 'dashboard.thecookiejar.app'],
+    domains: ['localhost', 'thecookiejar.app', 'creator.thecookiejar.app'],
     remotePatterns: [
       {
         protocol: 'https',

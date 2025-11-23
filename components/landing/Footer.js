@@ -4,7 +4,12 @@ const links = {
   product: [
     { name: 'Features', href: '#features' },
     { name: 'How it Works', href: '#how-it-works' },
-    { name: 'For Creators', href: '/auth/signin' },
+    { 
+      name: 'Creator Dashboard', 
+      href: typeof window !== 'undefined' && window.location.hostname === 'localhost'
+        ? 'http://localhost:3000/auth/signin'
+        : 'https://creator.thecookiejar.app/auth/signin'
+    },
     { name: 'Pricing', href: '#' },
   ],
   company: [

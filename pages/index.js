@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Hero from '../components/landing/Hero';
 import Features from '../components/landing/Features';
@@ -6,6 +8,18 @@ import ForCreators from '../components/landing/ForCreators';
 import Footer from '../components/landing/Footer';
 
 export default function Home() {
+  const router = useRouter();
+  
+  useEffect(() => {
+    // If on creator subdomain (localhost for dev), redirect to dashboard
+    if (typeof window !== 'undefined') {
+      const hostname = window.location.hostname;
+      if (hostname.includes('creator.thecookiejar.app')) {
+        router.push('/dashboard/overview');
+      }
+    }
+  }, [router]);
+
   return (
     <>
       <Head>

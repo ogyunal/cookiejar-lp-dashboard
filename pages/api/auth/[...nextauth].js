@@ -26,7 +26,7 @@ export const authOptions = {
           }
 
           if (data?.user) {
-            // Fetch user profile to check if they're a creator
+            // Fetch user profile
             const { data: profile, error: profileError } = await supabase
               .from('profiles')
               .select('*')
@@ -35,20 +35,17 @@ export const authOptions = {
 
             if (profileError) {
               console.error('Profile fetch error:', profileError);
-              throw new Error('Profile not found. Please contact support.');
+              throw new Error('Profile not found. Please sign up in the mobile app first.');
             }
 
-            if (!profile?.is_creator) {
-              console.error('User is not a creator:', profile);
-              throw new Error('This account is not registered as a creator');
-            }
-
+            // Allow any user to sign in - we'll check creator_status in the app
             return {
               id: data.user.id,
               email: data.user.email,
               name: profile.username,
               image: profile.avatar_url,
               isCreator: profile.is_creator,
+              creatorStatus: profile.creator_status || 'user',
             };
           }
 
@@ -69,6 +66,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.isCreator = user.isCreator;
+        token.creatorStatus = user.creatorStatus;
       }
       return token;
     },
@@ -76,6 +74,7 @@ export const authOptions = {
       if (token) {
         session.user.id = token.id;
         session.user.isCreator = token.isCreator;
+        session.user.creatorStatus = token.creatorStatus;
       }
       return session;
     },
