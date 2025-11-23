@@ -108,7 +108,7 @@ export default function DashboardLayout({ children, allowPending = false }) {
       <div className="lg:pl-64">
         <TopBar onMenuClick={() => setSidebarOpen(true)} />
         
-        <main className="p-4 lg:p-8">
+        <main className="p-4 lg:p-6 min-h-[calc(100vh-4rem)]">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

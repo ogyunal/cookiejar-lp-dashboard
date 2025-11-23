@@ -18,47 +18,47 @@ export default function TopBar({ onMenuClick }) {
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <header className="h-14 bg-white/80 backdrop-blur-xl border-b border-gray-200/60 flex items-center justify-between px-4 lg:px-6 sticky top-0 z-30 shadow-sm">
-      {/* Left side */}
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onMenuClick}
-          className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100/80 transition-all active:scale-95"
-        >
-          <FaBars className="text-gray-600 text-sm" />
-        </button>
-        
-        <div>
-          <h1 className="text-lg font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Creator Dashboard</h1>
+    <header className="h-16 bg-white/80 backdrop-blur-xl border-b border-gray-200/60 sticky top-0 z-30 shadow-sm">
+      <div className="h-full flex items-center justify-between px-4 lg:px-6">
+        {/* Left side */}
+        <div className="flex items-center gap-3 h-full">
+          <button
+            onClick={onMenuClick}
+            className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100/80 transition-all active:scale-95"
+          >
+            <FaBars className="text-gray-600" />
+          </button>
+          
+          <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent leading-none">
+            Creator Dashboard
+          </h1>
         </div>
-      </div>
-      
-      {/* Right side */}
-      <div className="flex items-center gap-2">
-        {/* Notifications */}
-        <div className="relative">
+        
+        {/* Right side */}
+        <div className="flex items-center gap-2 h-full">
+          {/* Notifications */}
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100/80 transition-all active:scale-95 group"
+            className="relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100/80 transition-all active:scale-95 group"
           >
-            <FaBell className="text-gray-600 text-sm group-hover:text-cookie-brown transition-colors" />
+            <FaBell className="text-gray-600 group-hover:text-cookie-brown transition-colors" />
             {unreadCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gradient-to-br from-red-500 to-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-lg shadow-red-500/30 animate-pulse">
+              <span className="absolute top-0 right-0 w-5 h-5 bg-gradient-to-br from-red-500 to-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-lg shadow-red-500/30 animate-pulse">
                 {unreadCount}
               </span>
             )}
           </button>
           
           {/* Notifications dropdown */}
-          <AnimatePresence>
-            {showNotifications && (
+          {showNotifications && (
+            <AnimatePresence>
               <>
                 <div 
                   className="fixed inset-0 z-40"
                   onClick={() => setShowNotifications(false)}
                 />
                 <motion.div
-                  className="absolute right-0 mt-2 w-80 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/60 overflow-hidden z-50"
+                  className="absolute right-0 top-full mt-2 w-80 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/60 overflow-hidden z-50"
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -107,37 +107,35 @@ export default function TopBar({ onMenuClick }) {
                   </div>
                 </motion.div>
               </>
-            )}
-          </AnimatePresence>
-        </div>
-        
-        {/* User menu */}
-        <div className="relative">
+            </AnimatePresence>
+          )}
+          
+          {/* User menu */}
           <button
             onClick={() => setShowDropdown(!showDropdown)}
-            className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-gray-100/80 transition-all active:scale-95 group"
+            className="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-gray-100/80 transition-all active:scale-95 group ml-1"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-cookie-brown via-cookie-dark-brown to-cookie-chocolate rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-cookie-brown/20 ring-2 ring-white group-hover:ring-cookie-cream transition-all">
+            <div className="w-9 h-9 bg-gradient-to-br from-cookie-brown via-cookie-dark-brown to-cookie-chocolate rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-cookie-brown/20 ring-2 ring-white group-hover:ring-cookie-cream transition-all">
               {session?.user?.name?.charAt(0)?.toUpperCase() || 'U'}
             </div>
-            <div className="hidden md:block text-left">
-              <p className="text-sm font-semibold text-gray-900 leading-tight">
+            <div className="hidden md:flex flex-col justify-center">
+              <p className="text-sm font-semibold text-gray-900 leading-none mb-0.5">
                 {session?.user?.name || 'User'}
               </p>
-              <p className="text-[10px] text-gray-500 leading-tight">Creator</p>
+              <p className="text-[10px] text-gray-500 leading-none">Creator</p>
             </div>
           </button>
           
           {/* User dropdown */}
-          <AnimatePresence>
-            {showDropdown && (
+          {showDropdown && (
+            <AnimatePresence>
               <>
                 <div 
                   className="fixed inset-0 z-40"
                   onClick={() => setShowDropdown(false)}
                 />
                 <motion.div
-                  className="absolute right-0 mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/60 overflow-hidden z-50"
+                  className="absolute right-0 top-full mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/60 overflow-hidden z-50"
                   initial={{ opacity: 0, y: -10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -188,8 +186,8 @@ export default function TopBar({ onMenuClick }) {
                   </div>
                 </motion.div>
               </>
-            )}
-          </AnimatePresence>
+            </AnimatePresence>
+          )}
         </div>
       </div>
     </header>
