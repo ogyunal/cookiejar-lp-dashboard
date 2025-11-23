@@ -102,14 +102,16 @@ export default function DashboardLayout({ children, allowPending = false }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-cookie-cream/10">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
-      <div className="lg:pl-72">
+      <div className="lg:pl-64">
         <TopBar onMenuClick={() => setSidebarOpen(true)} />
         
-        <main className="p-6">
-          {children}
+        <main className="p-4 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>

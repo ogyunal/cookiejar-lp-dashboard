@@ -76,6 +76,39 @@
       transform: translateY(0);
     }
   }
+
+  .animate-wave {
+    animation: wave 2.5s ease-in-out infinite;
+    transform-origin: 70% 70%;
+    display: inline-block;
+  }
+
+  @keyframes wave {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    10%, 30% {
+      transform: rotate(14deg);
+    }
+    20% {
+      transform: rotate(-8deg);
+    }
+    40% {
+      transform: rotate(-4deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    60% {
+      transform: rotate(0deg);
+    }
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }
 
 /* Custom scrollbar */
