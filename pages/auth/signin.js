@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Input from '../../components/shared/Input';
 import Button from '../../components/shared/Button';
@@ -111,13 +112,13 @@ export default function SignIn() {
             transition={{ duration: 0.6 }}
           >
             {/* Back to home link */}
-            <a
+            <Link
               href="/"
               className="inline-flex items-center gap-2 text-gray-600 hover:text-cookie-brown mb-8 transition-colors"
             >
               <FaArrowLeft />
               <span>Back to Home</span>
-            </a>
+            </Link>
             
             <div className="mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
