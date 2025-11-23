@@ -18,21 +18,29 @@ export const authOptions = {
           });
 
           if (error) {
-            console.error('Auth error:', error);
+            console.error('Auth error:', error.message);
+            if (error.message.includes('Email not confirmed')) {
+              throw new Error('Please verify your email before signing in');
+            }
             return null;
           }
 
           if (data?.user) {
             // Fetch user profile to check if they're a creator
-            const { data: profile } = await supabase
+            const { data: profile, error: profileError } = await supabase
               .from('profiles')
               .select('*')
               .eq('id', data.user.id)
               .single();
 
+            if (profileError) {
+              console.error('Profile fetch error:', profileError);
+              throw new Error('Profile not found. Please contact support.');
+            }
+
             if (!profile?.is_creator) {
-              console.error('User is not a creator');
-              return null;
+              console.error('User is not a creator:', profile);
+              throw new Error('This account is not registered as a creator');
             }
 
             return {

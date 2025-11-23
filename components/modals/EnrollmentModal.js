@@ -107,21 +107,51 @@ export default function EnrollmentModal({ isOpen, onClose }) {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Create creator profile
-        const { error: profileError } = await supabase
+        // Wait a moment for the trigger to create the profile
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Update the auto-created profile with creator info
+        const { data: updatedProfile, error: profileError } = await supabase
           .from('profiles')
-          .insert([
-            {
-              id: authData.user.id,
-              username: formData.username,
-              creator_bio: formData.bio || null,
-              is_creator: true,
-              creator_joined_at: new Date().toISOString(),
-            },
-          ]);
+          .update({
+            username: formData.username,
+            email: formData.email,
+            creator_bio: formData.bio || null,
+            is_creator: true,
+            creator_joined_at: new Date().toISOString(),
+          })
+          .eq('id', authData.user.id)
+          .select()
+          .single();
 
-        if (profileError) throw profileError;
+        if (profileError) {
+          console.error('Profile update error:', profileError);
+          
+          // If update fails, try insert as fallback
+          const { error: insertError } = await supabase
+            .from('profiles')
+            .insert([
+              {
+                id: authData.user.id,
+                username: formData.username,
+                email: formData.email,
+                creator_bio: formData.bio || null,
+                is_creator: true,
+                creator_joined_at: new Date().toISOString(),
+                created_at: new Date().toISOString(),
+              },
+            ])
+            .select()
+            .single();
+          
+          if (insertError) {
+            console.error('Profile insert error:', insertError);
+            throw new Error('Failed to create creator profile. Please try again.');
+          }
+        }
 
+        console.log('Creator profile created/updated successfully:', updatedProfile);
+        
         // Move to confirmation step
         setCurrentStep(3);
       }
