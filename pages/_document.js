@@ -4,7 +4,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/icon.png" />
+        <link rel="apple-touch-icon" href="/images/icon.png" />
         <meta name="theme-color" content="#D4A574" />
       </Head>
       <body>
